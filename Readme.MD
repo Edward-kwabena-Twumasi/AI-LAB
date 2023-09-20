@@ -1,5 +1,5 @@
 # AI Lab
-This repo is a catalogue of projects related AI, Machine Learning, Data Analysis, etc.
+This repo is a catalogue of projects related to AI, Machine Learning, Data Analysis, etc.
 
 ## Projects Summary
 
