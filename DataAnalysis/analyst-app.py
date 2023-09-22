@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import pathlib as path
 import os
+import time
 
 st.title("Data scientist assistant")
 
@@ -25,9 +26,12 @@ def upload_file(file):
         file_path = os.path.join(temp_dir, file.name)
         with open(file_path, "wb") as temp_file:
             temp_file.write(file_content)
-        return file_path
+
+        wait_time = 2  # seconds
+        while not os.path.exists(file_path) or os.path.getsize(file_path) != len(file_content):
+            time.sleep(wait_time)
     except:
-        return None
+       st.write("Exception occured reading file contents")
 
 
 
@@ -62,13 +66,16 @@ def read_input(source):
 
 file = st.file_uploader("pick a file")
 
-if file and upload_file(file) is not None:
-    input = read_input(upload_file(file))
+if file:
+    upload_file(file)
+
+    file_path = os.path.join("datasets",file.name)
+    input = read_input(file_path)
 
     if input[0] is None:
         st.write("Provided file ' {} ' in ivalid".format(input[1]))
     else:
-        st.write("Loaded dataset {}".format(file))
+        st.write("Loaded dataset {}".format(file_path))
         data = input[0]
 
         st.write("Plotting columns {}".format(data.columns[1]))
