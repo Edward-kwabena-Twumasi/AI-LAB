@@ -62,6 +62,50 @@ def read_input(source):
             return (data,source)
     return (None,source)
 
+# summariise data
+def describe_data(data):
+    if len(data) > 0:
+        # Take a peep at the data
+        """ ### Descripe your data
+        View first 5 rows
+        """
+
+        st.write(data.head())
+
+        """ ###
+        Datatypes in dataset 
+        """
+        #Get data types
+        st.write(data.dtypes)
+
+        """ ###
+        Columns in dataset
+        """
+        #Get columns
+        st.write(data.columns)
+
+        """ ###
+        Shape of dataset 
+        """
+        #Get shape of data
+        shape = data.shape
+
+        st.write("Dataset has {} rows and {} columns".format(shape[0],shape[1])) 
+       
+
+        """ ###
+          Describe dataset 
+        """
+        #Descriptive summary
+        st.write(data.describe())
+
+
+def plot_data(data):
+     st.write("Plotting columns {}".format(data.columns[1]))
+     st.line_chart(data[data.columns[1]])
+
+
+
 #read input
 
 file = st.file_uploader("pick a file")
@@ -77,6 +121,7 @@ if file:
     else:
         st.write("Loaded dataset {}".format(file_path))
         data = input[0]
+       
+        describe_data(data)
 
-        st.write("Plotting columns {}".format(data.columns[1]))
-        st.line_chart(data[data.columns[1]])
+       
