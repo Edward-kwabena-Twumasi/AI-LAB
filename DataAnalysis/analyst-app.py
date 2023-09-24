@@ -121,9 +121,6 @@ def describe_data(data):
 
 def get_null_stats(data):
     
-    """ ###
-         Missing values in dataset
-    """
     #What is the percentage of these null values 
     null_fields = get_null_fields(data)[0]
 
@@ -132,8 +129,11 @@ def get_null_stats(data):
         return
 
     null_fields_names = get_null_fields(data)[1]
-
-
+    
+    st.write(""" ###
+        Missing values in dataset
+    """)
+    
     st.write(null_fields)
     
     for col in null_fields_names:
@@ -142,6 +142,7 @@ def get_null_stats(data):
     null_fields = null_fields.rename("Missing Values %")
     st.write("(n_null/n_rows) % for each column")
     st.write(null_fields)
+    suggest_cleaning_options()
 
 
 def get_null_fields(data):
@@ -154,6 +155,14 @@ def get_null_fields(data):
 
     return (null_fields,null_fields_names)
 
+def suggest_cleaning_options():
+        st.write("##### Possible actions to take")
+        st.write("""
+            1. Drop rows with any missing values
+            2. Drop columns with missing values
+            3. Inpute missing data
+            """)
+   
 
 def plot_data(data):
      st.write("Plotting columns {}".format(data.columns[1]))
