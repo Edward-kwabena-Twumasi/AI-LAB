@@ -22,3 +22,6 @@ Contains notebooks and datasets from a free bootcamp course I am taking on openC
 
 #### The goal of this project is to learn, improve and innovate valuable AI solutions to share with the world ! 
 
+# Virtual Environment Creation
+#### Command - python -m venv myvenv(name of virtual environment)
+

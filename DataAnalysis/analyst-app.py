@@ -189,18 +189,24 @@ def clean_data(data):
 
 def impute_missing(data):
     from sklearn.impute import SimpleImputer
-
+    object_cols = data.select_dtypes(exclude = ['int64','float64']).columns
+    
+    data_to_impute = data
+    columns = data.columns
+    if len(object_cols) > 0:
+      data_to_impute =  encode_categorical(data,object_cols)
+      columns = data_to_impute.columns
+        
     # Imputation
     my_imputer = SimpleImputer()
-    imputed_X_train = pd.DataFrame(my_imputer.fit_transform(data))
+    imputed_X_train = pd.DataFrame(my_imputer.fit_transform(data_to_impute))
 
     # Imputation removed column names; put them back
-    imputed_X_train.columns = data.columns
+    imputed_X_train.columns = columns
     return imputed_X_train
+    
 
-def encode_categorical(data):
-
-    object_cols = data.select_dtpyes(exclude = ['int64','float64']).columns
+def encode_categorical(data,object_cols):
 
     from sklearn.preprocessing import OneHotEncoder
 
@@ -220,18 +226,18 @@ def encode_categorical(data):
     # Ensure all columns have string type
     OH_X_train.columns = OH_X_train.columns.astype(str)
 
+    return OH_X_train
+
 def take_action(decision,data,columns=[]):
     
-    if decision == "Drop columns":
-       
+    if decision == "Drop columns": 
        cleaned = data.drop(columns,axis=1)
        st.write("Dropped columns {} from dataset".format(columns))
-
+       return cleaned
+    
     elif decision == "Impute missing":
-
-        impute_missing(data)
-
-    return cleaned
+       cleaned = impute_missing(data)
+       return cleaned
 
 def plot_data(data):
      st.write("Plotting columns {}".format(data.columns[1]))
