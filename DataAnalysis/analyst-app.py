@@ -33,8 +33,6 @@ def upload_file(file):
     except:
        st.write("Exception occured reading file contents")
 
-
-
 # read in excel or csv file
 def validate_file(source):
     if path.Path(source).is_file():
@@ -48,6 +46,7 @@ def validate_file(source):
     else:
         print("file is invalid")
         return False
+ 
     
 # read input 
 def read_input(source):
@@ -147,10 +146,7 @@ def get_null_stats(data):
     with right_column:
         st.write(null_fields)
         st.write("n_null/n_rows % per column")
-    
-    
-
-
+       
 def get_null_fields(data):
     null_stats = data.isnull().sum()
     null_fields = null_stats[null_stats>0]
